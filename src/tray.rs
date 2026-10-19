@@ -89,7 +89,9 @@ impl Tray {
         view: TrayView,
         actions: async_channel::Sender<TrayAction>,
     ) -> Result<Handle<Tray>, ksni::Error> {
-        Tray { view, actions }.spawn()
+        // Inside Flatpak the app may not own the org.kde.StatusNotifierItem-* bus name,
+        // so the item is registered with its unique connection name instead.
+        Tray { view, actions }.disable_dbus_name(is_sandboxed()).spawn()
     }
 
     fn send(&self, action: TrayAction) {
@@ -179,6 +181,11 @@ impl ksni::Tray for Tray {
         );
         items
     }
+}
+
+/// Whether the app runs inside a Flatpak sandbox.
+fn is_sandboxed() -> bool {
+    std::path::Path::new("/.flatpak-info").exists()
 }
 
 /// Pushes a new view to a running tray.
