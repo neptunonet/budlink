@@ -51,11 +51,16 @@
   <launchable type="desktop-id">io.github.neptunonet.Budlink.desktop</launchable>
 
   <screenshots>
-    <!-- TODO: replace with real captures before submitting to Flathub. -->
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/neptunonet/budlink/main/data/screenshots/main.png</image>
+      <image xml:lang="es">https://raw.githubusercontent.com/neptunonet/budlink/main/data/screenshots/main-es.png</image>
       <caption>Noise control and battery</caption>
       <caption xml:lang="es">Control de ruido y batería</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/neptunonet/budlink/main/data/screenshots/light-es.png</image>
+      <caption>Light style</caption>
+      <caption xml:lang="es">Estilo claro</caption>
     </screenshot>
   </screenshots>
 

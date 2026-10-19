@@ -3,6 +3,8 @@
 Control your Google Pixel Buds from the Linux desktop: switch noise cancelling modes and check the
 battery of each bud and the case. Built with GTK 4 and libadwaita.
 
+![Budlink showing the noise control modes and the battery of each bud](data/screenshots/main.png)
+
 > **Status:** early development. Not affiliated with or endorsed by Google.
 
 ## Features
