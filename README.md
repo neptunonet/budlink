@@ -30,6 +30,21 @@ Budlink talks to the buds over Google's Maestro protocol, using
 
 If you try it with another model, please open an issue with the result.
 
+## Getting Budlink
+
+Budlink is available on GitHub, at
+[github.com/neptunonet/budlink](https://github.com/neptunonet/budlink). There are no prebuilt
+packages yet (a Flathub release is in the works), so get the source and build it in one of two
+ways:
+
+```sh
+git clone https://github.com/neptunonet/budlink.git
+cd budlink
+```
+
+- **Flatpak** (recommended, works on any distribution): see [Flatpak](#flatpak) below.
+- **Native build** with `cargo`, installed in `~/.local`: see the next steps.
+
 ## Building
 
 Dependencies on Debian/Ubuntu:
