@@ -62,6 +62,11 @@
       <caption>Light style</caption>
       <caption xml:lang="es">Estilo claro</caption>
     </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/neptunonet/budlink/main/data/screenshots/tray.png</image>
+      <caption>Panel icon menu</caption>
+      <caption xml:lang="es">Menú del ícono del panel</caption>
+    </screenshot>
   </screenshots>
 
   <url type="homepage">https://github.com/neptunonet/budlink</url>
