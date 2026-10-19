@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#62a0ea"/>
+      <stop offset="1" stop-color="#1c71d8"/>
+    </linearGradient>
+    <linearGradient id="bud" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#deddda"/>
+    </linearGradient>
+    <linearGradient id="pad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c0bfbc"/>
+      <stop offset="1" stop-color="#9a9996"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Tile, with a darker lip at the bottom as in GNOME app icons -->
+  <rect x="12" y="16" width="104" height="100" rx="26" fill="#1a5fb4"/>
+  <rect x="12" y="12" width="104" height="100" rx="26" fill="url(#base)"/>
+
+  <!-- Signal waves, upper right -->
+  <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width="6">
+    <path d="M78 34 A26 26 0 0 1 92 48" stroke-opacity="0.9"/>
+    <path d="M82 22 A38 38 0 0 1 104 44" stroke-opacity="0.6"/>
+  </g>
+
+  <!-- One bud in profile: ear tip pointing down-right, round body, touch pad -->
+  <g transform="translate(54 66)">
+    <g transform="rotate(-45)">
+      <rect x="-13" y="0" width="26" height="42" rx="13" fill="#5e5c64"/>
+      <rect x="-13" y="31" width="26" height="11" rx="5.5" fill="#77767b"/>
+    </g>
+    <circle r="31" fill="#1a5fb4" opacity="0.35" transform="translate(0 4)"/>
+    <circle r="31" fill="url(#bud)"/>
+    <circle r="13" fill="url(#pad)"/>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+[package]
+name = "budlink"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.92"
+license = "GPL-3.0-or-later"
+description = "Control Google Pixel Buds (ANC, battery) from the Linux desktop"
+repository = "https://github.com/neptunonet/budlink"
+authors = ["Juan Ignacio Armas"]
+
+[dependencies]
+adw = { package = "libadwaita", version = "0.9.2", features = ["v1_7"] }
+gtk = { package = "gtk4", version = "0.11.5", features = ["v4_16"] }
+anyhow = "1.0.98"
+async-channel = "2.5.0"
+bluer = { version = "0.17.4", features = ["bluetoothd", "rfcomm"] }
+futures = "0.3.31"
+# Maestro protocol client by Maximilian Luz (MIT/Apache-2.0), not published on crates.io.
+maestro = { git = "https://github.com/qzed/pbpctrl", rev = "2620367a41f92135059f637d92a2e4f427abb44e" }
+tokio = { version = "1.44.2", features = ["rt", "macros", "time", "sync"] }
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+ksni = { version = "0.3.6", features = ["blocking"] }

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Budlink
+Comment=Control your Pixel Buds: noise cancelling and battery
+Comment[es]=Controla tus Pixel Buds: cancelación de ruido y batería
+Exec=budlink
+Icon=io.github.neptunonet.Budlink
+Terminal=false
+Categories=AudioVideo;Audio;
+Keywords=pixel;buds;anc;noise;headphones;earbuds;bluetooth;
+Keywords[es]=pixel;buds;anc;ruido;auriculares;bluetooth;
+StartupNotify=true
