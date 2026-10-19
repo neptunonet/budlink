@@ -86,6 +86,9 @@ pub enum Msg {
     General,
     Language,
     SystemDefault,
+    Appearance,
+    Light,
+    Dark,
 }
 
 pub fn t(msg: Msg) -> &'static str {
@@ -146,6 +149,9 @@ pub fn t(msg: Msg) -> &'static str {
         General => pick("General", "General"),
         Language => pick("Language", "Idioma"),
         SystemDefault => pick("System default", "Predeterminado del sistema"),
+        Appearance => pick("Appearance", "Apariencia"),
+        Light => pick("Light", "Claro"),
+        Dark => pick("Dark", "Oscuro"),
     }
 }
 

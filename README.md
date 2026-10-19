@@ -16,6 +16,7 @@ battery of each bud and the case. Built with GTK 4 and libadwaita.
   desktop with StatusNotifierItem support: KDE, or GNOME with the AppIndicator extension
   (enabled by default on Ubuntu). Without it, closing the window quits the app.
 - English and Spanish, selectable in Preferences (follows the system language by default)
+- Light or dark style, selectable in Preferences (follows the system setting by default)
 
 ## Supported devices
 

@@ -11,7 +11,7 @@ use std::rc::Rc;
 use adw::prelude::*;
 use gtk::{gio, glib};
 
-use config::{Config, LangPref};
+use config::{Appearance, Config, LangPref};
 use device::{Command, Event};
 use i18n::{Msg, t};
 use state::State;
@@ -36,6 +36,7 @@ impl Controller {
     fn start(app: &adw::Application) -> Rc<Self> {
         let config = Config::load();
         i18n::set(config.language.resolve());
+        adw::StyleManager::default().set_color_scheme(config.appearance.color_scheme());
 
         let (cmd_tx, evt_rx) = device::spawn();
         let state = State::default();
@@ -165,6 +166,16 @@ impl Controller {
         self.update_tray();
     }
 
+    fn set_appearance(&self, pref: Appearance) {
+        let mut config = self.config.borrow_mut();
+        if config.appearance == pref {
+            return;
+        }
+        config.appearance = pref;
+        config.save();
+        adw::StyleManager::default().set_color_scheme(pref.color_scheme());
+    }
+
     fn show_preferences(self: &Rc<Self>) {
         let languages = gtk::StringList::new(&[t(Msg::SystemDefault), "English", "Español"]);
         let current = self.config.borrow().language;
@@ -174,17 +185,36 @@ impl Controller {
             .selected(LangPref::ALL.iter().position(|p| *p == current).unwrap_or(0) as u32)
             .build();
 
+        let appearance_labels = || [t(Msg::SystemDefault), t(Msg::Light), t(Msg::Dark)];
+        let appearances = gtk::StringList::new(&appearance_labels());
+        let current = self.config.borrow().appearance;
+        let appearance = adw::ComboRow::builder()
+            .title(t(Msg::Appearance))
+            .model(&appearances)
+            .selected(Appearance::ALL.iter().position(|p| *p == current).unwrap_or(0) as u32)
+            .build();
+
         let group = adw::PreferencesGroup::builder().title(t(Msg::General)).build();
         group.add(&language);
+        group.add(&appearance);
         let page = adw::PreferencesPage::new();
         page.add(&group);
 
         let dialog = adw::PreferencesDialog::builder().title(t(Msg::Preferences)).build();
         dialog.add(&page);
 
+        let appearance_changed = appearance.connect_selected_notify({
+            let ctl = self.clone();
+            move |row| {
+                if let Some(pref) = Appearance::ALL.get(row.selected() as usize) {
+                    ctl.set_appearance(*pref);
+                }
+            }
+        });
+
         language.connect_selected_notify({
             let ctl = self.clone();
-            let (dialog, group) = (dialog.clone(), group.clone());
+            let (dialog, group, appearance) = (dialog.clone(), group.clone(), appearance.clone());
             move |row| {
                 let Some(pref) = LangPref::ALL.get(row.selected() as usize) else { return };
                 ctl.set_language(*pref);
@@ -193,6 +223,15 @@ impl Controller {
                 dialog.set_title(t(Msg::Preferences));
                 group.set_title(t(Msg::General));
                 row.set_title(t(Msg::Language));
+                appearance.set_title(t(Msg::Appearance));
+
+                // Replacing the labels resets the selection: restore it without
+                // treating the intermediate values as a choice.
+                let selected = appearance.selected();
+                appearance.block_signal(&appearance_changed);
+                appearances.splice(0, appearances.n_items(), &appearance_labels());
+                appearance.set_selected(selected);
+                appearance.unblock_signal(&appearance_changed);
             }
         });
 

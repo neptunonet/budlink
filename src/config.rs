@@ -36,9 +36,39 @@ impl LangPref {
     }
 }
 
+/// Light or dark style. `System` follows the desktop setting.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum Appearance {
+    #[default]
+    System,
+    Light,
+    Dark,
+}
+
+impl Appearance {
+    pub const ALL: [Appearance; 3] = [Appearance::System, Appearance::Light, Appearance::Dark];
+
+    pub fn color_scheme(self) -> adw::ColorScheme {
+        match self {
+            Appearance::System => adw::ColorScheme::Default,
+            Appearance::Light => adw::ColorScheme::ForceLight,
+            Appearance::Dark => adw::ColorScheme::ForceDark,
+        }
+    }
+
+    fn key(self) -> &'static str {
+        match self {
+            Appearance::System => "system",
+            Appearance::Light => "light",
+            Appearance::Dark => "dark",
+        }
+    }
+}
+
 #[derive(Debug, Clone, Default)]
 pub struct Config {
     pub language: LangPref,
+    pub appearance: Appearance,
 }
 
 fn path() -> PathBuf {
@@ -55,11 +85,19 @@ impl Config {
 
         for line in text.lines() {
             let Some((key, value)) = line.split_once('=') else { continue };
-            if key.trim() == "language" {
-                let value = value.trim();
-                if let Some(pref) = LangPref::ALL.into_iter().find(|p| p.key() == value) {
-                    config.language = pref;
+            let value = value.trim();
+            match key.trim() {
+                "language" => {
+                    if let Some(pref) = LangPref::ALL.into_iter().find(|p| p.key() == value) {
+                        config.language = pref;
+                    }
                 }
+                "appearance" => {
+                    if let Some(pref) = Appearance::ALL.into_iter().find(|p| p.key() == value) {
+                        config.appearance = pref;
+                    }
+                }
+                _ => {}
             }
         }
         config
@@ -67,7 +105,11 @@ impl Config {
 
     pub fn save(&self) {
         let path = path();
-        let text = format!("language={}\n", self.language.key());
+        let text = format!(
+            "language={}\nappearance={}\n",
+            self.language.key(),
+            self.appearance.key()
+        );
         let res = path
             .parent()
             .map_or(Ok(()), fs::create_dir_all)
