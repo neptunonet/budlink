@@ -53,6 +53,37 @@ To install it for your user, with its menu entry and icon (in `~/.local`):
 
 `./install.sh --uninstall` removes it again.
 
+### Flatpak
+
+The manifest is [`io.github.neptunonet.Budlink.json`](io.github.neptunonet.Budlink.json). It
+builds on the GNOME 51 runtime with the `rust-stable` SDK extension. Install the tooling and the
+Flathub remote first:
+
+```sh
+sudo apt install flatpak flatpak-builder
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+```
+
+Then build and install it for your user:
+
+```sh
+flatpak-builder --user --install --install-deps-from=flathub --force-clean build-dir io.github.neptunonet.Budlink.json
+flatpak run io.github.neptunonet.Budlink
+```
+
+The build runs offline, so the Rust crates come from
+[`build-aux/cargo-sources.json`](build-aux/cargo-sources.json). Regenerate it after any change to
+`Cargo.lock`, with
+[`flatpak-cargo-generator`](https://github.com/flatpak/flatpak-builder-tools/tree/master/cargo):
+
+```sh
+uv run flatpak-cargo-generator.py Cargo.lock -o build-aux/cargo-sources.json
+```
+
+The sandbox gets the Bluetooth socket family (`--allow=bluetooth`, for the RFCOMM link to the
+buds), BlueZ on the system bus and the StatusNotifierWatcher on the session bus (for the panel
+icon), besides the usual display access.
+
 ## Usage
 
 1. Pair and connect the buds from the system Bluetooth settings.

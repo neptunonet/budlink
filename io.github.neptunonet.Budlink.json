@@ -1,0 +1,80 @@
+{
+    "id": "io.github.neptunonet.Budlink",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "51",
+    "sdk": "org.gnome.Sdk",
+    "sdk-extensions": [
+        "org.freedesktop.Sdk.Extension.rust-stable"
+    ],
+    "command": "budlink",
+    "finish-args": [
+        "--socket=wayland",
+        "--socket=fallback-x11",
+        "--share=ipc",
+        "--device=dri",
+        "--allow=bluetooth",
+        "--system-talk-name=org.bluez",
+        "--talk-name=org.kde.StatusNotifierWatcher"
+    ],
+    "build-options": {
+        "append-path": "/usr/lib/sdk/rust-stable/bin"
+    },
+    "cleanup": [
+        "/protoc"
+    ],
+    "modules": [
+        {
+            "name": "protoc",
+            "buildsystem": "simple",
+            "build-commands": [
+                "install -Dm755 bin/protoc /app/protoc/bin/protoc",
+                "cp -r include /app/protoc/include"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "only-arches": ["x86_64"],
+                    "url": "https://github.com/protocolbuffers/protobuf/releases/download/v36.2/protoc-36.2-linux-x86_64.zip",
+                    "sha256": "121f6c7afe1d4d0e3ea6aab9432038599250134cbf4474cb1167d2c7decd4278",
+                    "strip-components": 0
+                },
+                {
+                    "type": "archive",
+                    "only-arches": ["aarch64"],
+                    "url": "https://github.com/protocolbuffers/protobuf/releases/download/v36.2/protoc-36.2-linux-aarch_64.zip",
+                    "sha256": "8b8f18bd2b30346efbc698dd5a73dd7c805f3ef8380f6dfc95c768f3f1852f6a",
+                    "strip-components": 0
+                }
+            ]
+        },
+        {
+            "name": "budlink",
+            "buildsystem": "simple",
+            "build-options": {
+                "env": {
+                    "CARGO_HOME": "/run/build/budlink/cargo",
+                    "CARGO_NET_OFFLINE": "true",
+                    "PROTOC": "/app/protoc/bin/protoc",
+                    "PROTOC_INCLUDE": "/app/protoc/include"
+                }
+            },
+            "build-commands": [
+                "cargo --offline fetch --manifest-path Cargo.toml --verbose",
+                "cargo --offline build --release --locked",
+                "install -Dm755 target/release/budlink /app/bin/budlink",
+                "install -Dm644 data/io.github.neptunonet.Budlink.desktop /app/share/applications/io.github.neptunonet.Budlink.desktop",
+                "install -Dm644 data/io.github.neptunonet.Budlink.metainfo.xml /app/share/metainfo/io.github.neptunonet.Budlink.metainfo.xml",
+                "install -Dm644 data/icons/io.github.neptunonet.Budlink.svg /app/share/icons/hicolor/scalable/apps/io.github.neptunonet.Budlink.svg",
+                "install -Dm644 data/icons/io.github.neptunonet.Budlink-symbolic.svg /app/share/icons/hicolor/symbolic/apps/io.github.neptunonet.Budlink-symbolic.svg"
+            ],
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": ".",
+                    "skip": [".flatpak-builder", "build-dir", "repo", "target"]
+                },
+                "build-aux/cargo-sources.json"
+            ]
+        }
+    ]
+}

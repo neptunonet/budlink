@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2026 Juan Ignacio Armas -->
+<component type="desktop-application">
+  <id>io.github.neptunonet.Budlink</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <name>Budlink</name>
+  <summary>Control your Pixel Buds</summary>
+  <summary xml:lang="es">Controlá tus Pixel Buds</summary>
+
+  <developer id="io.github.neptunonet">
+    <name>Juan Ignacio Armas</name>
+  </developer>
+
+  <description>
+    <p>
+      Budlink lets you control Google Pixel Buds from the Linux desktop: switch the noise
+      control mode and check the battery of each bud and the case.
+    </p>
+    <p xml:lang="es">
+      Budlink te permite controlar los Google Pixel Buds desde el escritorio de Linux: cambiar
+      el modo de control de ruido y ver la batería de cada auricular y del estuche.
+    </p>
+    <p>Features:</p>
+    <p xml:lang="es">Funciones:</p>
+    <ul>
+      <li>Noise control: off, noise cancelling, transparency and adaptive</li>
+      <li xml:lang="es">Control de ruido: desactivado, cancelación de ruido, transparencia y adaptativo</li>
+      <li>Battery level and charging state for the left bud, right bud and case</li>
+      <li xml:lang="es">Nivel de batería y estado de carga del auricular izquierdo, el derecho y el estuche</li>
+      <li>Follows changes made on the buds themselves</li>
+      <li xml:lang="es">Sigue los cambios hechos desde los propios auriculares</li>
+      <li>Reconnects on its own when the buds come back</li>
+      <li xml:lang="es">Se reconecta solo cuando los auriculares vuelven</li>
+      <li>Panel icon with battery and noise control</li>
+      <li xml:lang="es">Ícono en el panel con batería y control de ruido</li>
+    </ul>
+    <p>
+      Pair and connect the buds from the system Bluetooth settings first. Budlink is not
+      affiliated with or endorsed by Google.
+    </p>
+    <p xml:lang="es">
+      Primero emparejá y conectá los auriculares desde la configuración de Bluetooth del
+      sistema. Budlink no está afiliado a Google ni cuenta con su respaldo.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">io.github.neptunonet.Budlink.desktop</launchable>
+
+  <screenshots>
+    <!-- TODO: replace with real captures before submitting to Flathub. -->
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/neptunonet/budlink/main/data/screenshots/main.png</image>
+      <caption>Noise control and battery</caption>
+      <caption xml:lang="es">Control de ruido y batería</caption>
+    </screenshot>
+  </screenshots>
+
+  <url type="homepage">https://github.com/neptunonet/budlink</url>
+  <url type="bugtracker">https://github.com/neptunonet/budlink/issues</url>
+  <url type="vcs-browser">https://github.com/neptunonet/budlink</url>
+
+  <branding>
+    <color type="primary" scheme_preference="light">#99c1f1</color>
+    <color type="primary" scheme_preference="dark">#1a5fb4</color>
+  </branding>
+
+  <content_rating type="oars-1.1" />
+
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+
+  <keywords>
+    <keyword>Pixel Buds</keyword>
+    <keyword>earbuds</keyword>
+    <keyword>headphones</keyword>
+    <keyword>noise cancelling</keyword>
+    <keyword>ANC</keyword>
+    <keyword>bluetooth</keyword>
+  </keywords>
+
+  <provides>
+    <binary>budlink</binary>
+  </provides>
+
+  <releases>
+    <release version="0.1.0" date="2026-10-19">
+      <description>
+        <p>First release: noise control, battery, panel icon, English and Spanish.</p>
+        <p xml:lang="es">Primera versión: control de ruido, batería, ícono en el panel, inglés y español.</p>
+      </description>
+    </release>
+  </releases>
+</component>
